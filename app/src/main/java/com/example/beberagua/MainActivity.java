@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         btnNotify = findViewById(R.id.btn_notify);
         edittext = findViewById(R.id.edit_text_number);
         timePicker = findViewById(R.id.time_picker);
+
+        timePicker.setIs24HourView(true);
     }
 
 }
