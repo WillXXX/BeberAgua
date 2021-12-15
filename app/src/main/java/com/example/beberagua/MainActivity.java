@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         timePicker.setIs24HourView(true);
 
+        //Evento de click com objeto anonimo
+
         btnNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
