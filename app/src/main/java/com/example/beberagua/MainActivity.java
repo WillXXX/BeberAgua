@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.net.InterfaceAddress;
 
@@ -39,13 +40,21 @@ public class MainActivity extends AppCompatActivity {
 
                 String sInterval = editMinutes.getText().toString();
 
+//Função para corrigir o erro de fechamento do botão notificar quando vazio
+
+                if (sInterval.isEmpty()) {
+//Toast serve para mostrar informações rápidas no Android
+                    Toast.makeText(getApplicationContext(), R.string.error_msg, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 hour = timePicker.getCurrentHour();
                 minute = timePicker.getCurrentMinute();
                 interval = Integer.parseInt(sInterval);
 
-                Log.d("Teste"," Hora: " + hour +" minute: " + minute + " intervalo: " + interval);
+                Log.d("Teste", " Hora: " + hour + " minute: " + minute + " intervalo: " + interval);
             }
-        } );
+        });
     }
 
 
