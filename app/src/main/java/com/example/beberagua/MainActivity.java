@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         editMinutes = findViewById(R.id.edit_text_number);
         timePicker = findViewById(R.id.time_picker);
 
+        //mudar para formato 24h
         timePicker.setIs24HourView(true);
     }
 
