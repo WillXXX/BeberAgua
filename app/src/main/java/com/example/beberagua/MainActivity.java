@@ -15,7 +15,6 @@ import java.net.InterfaceAddress;
 
 public class MainActivity extends AppCompatActivity {
 
-    //declaração de variaveies
     private Button btnNotify;
     private EditText editMinutes;
     private TimePicker timePicker;
@@ -31,17 +30,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //retorno das funções
         btnNotify = findViewById(R.id.btn_notify);
         editMinutes = findViewById(R.id.edit_text_number);
         timePicker = findViewById(R.id.time_picker);
 
-        //mudar para formato 24h
         timePicker.setIs24HourView(true);
     }
 
+    //evento de click via xml
     public void notifyClick(View view) {
-        editMinutes
+        String sInterval = editMinutes.getText().toString();
+
+        //Função para corrigir o erro de fechamento do botão notificar quando vazio
+        if (sInterval.isEmpty()) {
+            Toast.makeText(this, R.string.error_msg, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        hour = timePicker.getCurrentHour();
+        minute = timePicker.getCurrentMinute();
+        interval = Integer.parseInt(sInterval);
+
+        Log.d("Teste", "Hora:" + hour + "minuto" + minute + "intervalo" + interval);
     }
 
 
@@ -51,28 +61,30 @@ public class MainActivity extends AppCompatActivity {
 //            public void onClick(View v) {
 //
 //                String sInterval = editMinutes.getText().toString();
-//
+
 ////Função para corrigir o erro de fechamento do botão notificar quando vazio
 //
-//                if (sInterval.isEmpty()) {
-////Toast serve para mostrar informações rápidas no Android
-//                    Toast.makeText(getApplicationContext(), R.string.error_msg, Toast.LENGTH_LONG).show();
-//                    return;
-//                }
+//                if(sInterval.isEmpty())
 //
-//                hour = timePicker.getCurrentHour();
-//                minute = timePicker.getCurrentMinute();
-//                interval = Integer.parseInt(sInterval);
+//    {
+////Toast serve para mostrar informações rápidas no Android
+//        Toast.makeText(getApplicationContext(), R.string.error_msg, Toast.LENGTH_LONG).show();
+//        return;
+//    }
+//
+//    hour =timePicker.getCurrentHour();
+//    minute =timePicker.getCurrentMinute();
+//    interval =Integer.parseInt(sInterval);
 //
 //                btnNotify.setText(R.string.pause);
-//                int color;
-//                color = (ContextCompat.getColor(this, android.R.color.black);
+//    int color;
+//    color =(ContextCompat.getColor(this,android.R.color.black);
 //                btnNotify.setBackgroundColor(color);
 //
-//                Log.d("Teste", " Hora: " + hour + " minute: " + minute + " intervalo: " + interval);
-//            }
+//                Log.d("Teste"," Hora: "+hour +" minute: "+minute +" intervalo: "+interval);
+//}
 //        });
-//    }
+//                }
 
 
 }
