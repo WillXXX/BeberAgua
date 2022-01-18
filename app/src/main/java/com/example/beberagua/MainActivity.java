@@ -3,6 +3,8 @@ package com.example.beberagua;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private int minute;
     private int interval;
 
+    //logica booleana para fazer o botão voltar, pois o mesmo depois de ativado não volta ao estado normal, depois aplicar (if else) linha 56
     private boolean activated = false;
+
+    private SharedPreferences preferences = getSharedPreferences("db", Context.MODE_PRIVATE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,20 @@ public class MainActivity extends AppCompatActivity {
         hour = timePicker.getCurrentHour();
         minute = timePicker.getCurrentMinute();
         interval = Integer.parseInt(sInterval);
+
+
+        if (!activated) {
+//aqui foi criado arquivo de string "pausar" detro da chave "pausa"
+            btnNotify.setText(R.string.pause);
+            int color = ContextCompat.getColor(this, android.R.color.black);
+            btnNotify.setBackgroundColor(color);
+            activated = true;
+        } else {
+            btnNotify.setText(R.string.notify);
+            int color = ContextCompat.getColor(this, R.color.colorAccent);
+            btnNotify.setBackgroundColor(color);
+            activated = false;
+        }
 
         Log.d("Teste", "Hora:" + hour + "minuto" + minute + "intervalo" + interval);
     }
