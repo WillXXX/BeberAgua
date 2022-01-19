@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     //logica booleana para fazer o botão voltar, pois o mesmo depois de ativado não volta ao estado normal, depois aplicar (if else) linha 56
     private boolean activated = false;
 
-    private SharedPreferences preferences = getSharedPreferences("db", Context.MODE_PRIVATE);
+    //Classe de preferecias conpartilhadas
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,22 @@ public class MainActivity extends AppCompatActivity {
         timePicker = findViewById(R.id.time_picker);
 
         timePicker.setIs24HourView(true);
+        preferences = getSharedPreferences("db", Context.MODE_PRIVATE);
+
+        preferences.getBoolean("activated",false);
+        if (activated){
+            btnNotify.setText(R.string.pause);
+            int color = ContextCompat.getColor(this, android.R.color.black);
+            btnNotify.setBackgroundColor(color);
+
+            int interval = preferences.getInt("interval",0);
+            int hour = preferences.getInt("hour",timePicker.getCurrentHour());
+            int minute = preferences.getInt("minute",timePicker.getCurrentMinute());
+
+            editMinutes.setText(String.valueOf(interval));
+            timePicker.setCurrentHour(hour);
+            timePicker.setCurrentMinute(minute);
+        }
     }
 
     //evento de click via xml
@@ -63,11 +80,29 @@ public class MainActivity extends AppCompatActivity {
             int color = ContextCompat.getColor(this, android.R.color.black);
             btnNotify.setBackgroundColor(color);
             activated = true;
+
+            //Editor para guardar as variaveis das horas
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("activated", true);
+            editor.putInt("interval", interval);
+            editor.putInt("hora", hour);
+            editor.putInt("minuto", minute);
+            editor.apply();
+
         } else {
             btnNotify.setText(R.string.notify);
             int color = ContextCompat.getColor(this, R.color.colorAccent);
             btnNotify.setBackgroundColor(color);
             activated = false;
+
+            //Editor para zerar as variaveis das horas; remover identificadores
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("activated", false);
+            editor.remove("interval");
+            editor.remove("hora");
+            editor.remove("minuto");
+            editor.apply();
+
         }
 
         Log.d("Teste", "Hora:" + hour + "minuto" + minute + "intervalo" + interval);
