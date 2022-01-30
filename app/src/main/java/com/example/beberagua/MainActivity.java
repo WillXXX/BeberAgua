@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     //logica booleana para fazer o botão voltar, pois o mesmo depois de ativado não volta ao estado normal, depois aplicar (if else) linha 56
     private boolean activated = false;
 
-    //Classe de preferecias conpartilhadas
+    //Classe de preferecias compartilhadas; declarar variavel
     private SharedPreferences preferences;
 
     @Override
@@ -41,17 +41,19 @@ public class MainActivity extends AppCompatActivity {
         timePicker = findViewById(R.id.time_picker);
 
         timePicker.setIs24HourView(true);
+        //Atribuir valor
         preferences = getSharedPreferences("db", Context.MODE_PRIVATE);
 
-        preferences.getBoolean("activated",false);
-        if (activated){
+        activated = preferences.getBoolean("activated", false);
+
+        if (activated) {
             btnNotify.setText(R.string.pause);
             int color = ContextCompat.getColor(this, android.R.color.black);
             btnNotify.setBackgroundColor(color);
 
-            int interval = preferences.getInt("interval",0);
-            int hour = preferences.getInt("hour",timePicker.getCurrentHour());
-            int minute = preferences.getInt("minute",timePicker.getCurrentMinute());
+            int interval = preferences.getInt("interval", 0);
+            int hour = preferences.getInt("hour", timePicker.getCurrentHour());
+            int minute = preferences.getInt("minute", timePicker.getCurrentMinute());
 
             editMinutes.setText(String.valueOf(interval));
             timePicker.setCurrentHour(hour);
@@ -85,8 +87,9 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("activated", true);
             editor.putInt("interval", interval);
-            editor.putInt("hora", hour);
-            editor.putInt("minuto", minute);
+            editor.putInt("hour", hour);
+            editor.putInt("minute", minute);
+//efetivar escrita no banco de dados
             editor.apply();
 
         } else {
@@ -95,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
             btnNotify.setBackgroundColor(color);
             activated = false;
 
-            //Editor para zerar as variaveis das horas; remover identificadores
+//Logica inversa/ Editor para zerar as variaveis das horas; remover identificadores
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("activated", false);
             editor.remove("interval");
-            editor.remove("hora");
-            editor.remove("minuto");
+            editor.remove("hour");
+            editor.remove("minute");
             editor.apply();
 
         }
